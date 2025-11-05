@@ -33,7 +33,7 @@ Before using this script, ensure you have:
 
 1. Clone or download this repository:
    ```bash
-   git clone https://github.com/yourusername/claudeBranchPuller.git
+   git clone https://github.com/abdlkrmdlgr/claudeBranchPuller.git
    cd claudeBranchPuller
    ```
 
@@ -167,7 +167,7 @@ This project is open source and available under the [MIT License](LICENSE).
 
 ## Contributing
 
-Contributions, issues, and feature requests are welcome! Feel free to check the [issues page](https://github.com/yourusername/claudeBranchPuller/issues).
+Contributions, issues, and feature requests are welcome! Feel free to check the [issues page](https://github.com/abdlkrmdlgr/claudeBranchPuller/issues).
 
 ## Author
 
