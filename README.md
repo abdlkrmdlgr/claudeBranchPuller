@@ -42,7 +42,9 @@ Before using this script, ensure you have:
    chmod +x gpr.sh
    ```
 
-3. Add the function to your shell configuration:
+3. **Important:** If your default branch is not `main` (e.g., `master`, `develop`, etc.), you'll need to modify the script before installation. See the [Customization](#customization) section below.
+
+4. Add the function to your shell configuration:
 
    **For Zsh (macOS default):**
    ```bash
@@ -83,13 +85,15 @@ gpr
 
 ### What it does:
 
-1. Switches to the `main` branch
+1. Switches to the default branch (default: `main` - see [Customization](#customization) if your default branch has a different name)
 2. Checks for the newest open Pull Request using GitHub CLI
 3. If a PR is found:
    - Displays the PR number and branch name
    - Automatically checks out the PR branch
 4. If no PR is found:
    - Falls back to running `git pull` on the current branch
+
+> **Note:** The script assumes your default branch is named `main`. If your repository uses `master`, `develop`, or another branch name as the default, you'll need to customize the script. See the [Customization](#customization) section below.
 
 ### Example Output
 
@@ -117,6 +121,10 @@ PR Info:
 - Verify installation: `gh --version`
 - Authenticate: `gh auth login`
 
+### "error: pathspec 'main' did not match any file(s) known to git"
+- This means your repository doesn't have a branch named `main`. The script defaults to `main`, but your repository might use `master`, `develop`, or another branch name.
+- **Solution:** Customize the script to use your default branch name. See the [Customization](#customization) section below.
+
 ### "fatal: not a git repository"
 - Make sure you're in a Git repository directory
 - Initialize a Git repo if needed: `git init`
@@ -135,18 +143,36 @@ PR Info:
 
 ## Customization
 
-### Change Default Branch
+### ⚠️ Change Default Branch (Important!)
 
-If your default branch is not `main`, modify the script:
+**The script defaults to `main` branch. If your repository uses a different default branch name (like `master`, `develop`, `trunk`, etc.), you must modify the script before using it.**
+
+To change the default branch, edit the script file (`gpr.sh`) or your shell configuration file and modify the following line:
 
 ```bash
-# Change this line:
+# Change this line in gpr.sh:
 git switch main
 
 # To your default branch, e.g.:
 git switch master
 # or
 git switch develop
+# or
+git switch trunk
+```
+
+**Example:** If your default branch is `master`:
+```bash
+# Before:
+git switch main
+
+# After:
+git switch master
+```
+
+After making this change, reload your shell configuration:
+```bash
+source ~/.zshrc  # or source ~/.bashrc
 ```
 
 ### Modify PR Search
