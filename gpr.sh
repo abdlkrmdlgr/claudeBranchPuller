@@ -2,6 +2,7 @@
 
 # gpr - Git Pull Request Checkout Script
 # Automatically checks out the newest open Pull Request from GitHub
+# Author: https://github.com/abdlkrmdlgr
 
 function gpr() {
   echo "🔍 Checking for the newest open Pull Request..."
@@ -32,6 +33,4 @@ function gpr() {
     fi
   fi
 }
-
-# Author: https://github.com/abdlkrmdlgr
 
