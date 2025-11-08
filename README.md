@@ -10,6 +10,7 @@ A bash/zsh function that automatically checks out the newest open Pull Request f
 - 📦 Works with GitHub CLI (`gh`)
 - 🎯 Smart branch switching to `main` before PR checkout
 - 🔁 **Auto-rebase:** Automatically rebases the PR branch onto the latest base branch (e.g., `main` or `master`)
+- 📤 **Auto-push:** Automatically pushes the rebased branch to GitHub after successful rebase
 
 ## Prerequisites
 
@@ -127,6 +128,7 @@ gpr
    - Automatically checks out the PR branch
    - **Automatically rebases the PR branch onto the latest base branch** (e.g., `main` or `master`)
    - This ensures the PR branch includes any changes that were merged to the base branch after the PR was opened
+   - **Automatically pushes the rebased branch to GitHub** using `--force-with-lease` for safety
 4. If no PR is found:
    - Falls back to running `git pull` on the current branch
 
@@ -143,6 +145,8 @@ PR Info: 42    feature/new-feature
 ✅ PR #42 successfully checked out. You are currently on branch 'feature/new-feature'.
 🔄 Rebasing 'feature/new-feature' onto 'main'...
 ✅ Successfully rebased onto 'main'. Branch is now up-to-date!
+📤 Pushing rebased branch to GitHub...
+✅ Successfully pushed rebased branch to GitHub!
 ```
 
 When no PR is found:
@@ -188,6 +192,18 @@ PR Info:
   2. Stage the resolved files: `git add <file>`
   3. Continue the rebase: `git rebase --continue`
 - To abort the rebase and return to the pre-rebase state: `git rebase --abort`
+
+### Push failures after rebase
+- If the automatic push to GitHub fails, you'll see a warning message with the manual push command
+- Common causes:
+  - Network connectivity issues
+  - Insufficient permissions to push to the repository
+  - Remote branch has been updated by someone else (protected by `--force-with-lease`)
+- To push manually after a failed automatic push:
+  ```bash
+  git push --force-with-lease origin <branch-name>
+  ```
+- **Note:** The script uses `--force-with-lease` instead of `--force` for safety. This ensures you don't accidentally overwrite changes that were pushed to the remote branch while you were rebasing.
 
 ## Customization
 
