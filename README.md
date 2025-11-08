@@ -9,6 +9,7 @@ A bash/zsh function that automatically checks out the newest open Pull Request f
 - 🔄 Falls back to standard `git pull` if no PR is found
 - 📦 Works with GitHub CLI (`gh`)
 - 🎯 Smart branch switching to `main` before PR checkout
+- 🔁 **Auto-rebase:** Automatically rebases the PR branch onto the latest base branch (e.g., `main` or `master`)
 
 ## Prerequisites
 
@@ -90,6 +91,8 @@ gpr
 3. If a PR is found:
    - Displays the PR number and branch name
    - Automatically checks out the PR branch
+   - **Automatically rebases the PR branch onto the latest base branch** (e.g., `main` or `master`)
+   - This ensures the PR branch includes any changes that were merged to the base branch after the PR was opened
 4. If no PR is found:
    - Falls back to running `git pull` on the current branch
 
@@ -104,6 +107,8 @@ PR Info: 42    feature/new-feature
 🚀 Newest PR found: #42 (feature/new-feature)
 ⬇️ Fetching the PR locally and switching to this branch...
 ✅ PR #42 successfully checked out. You are currently on branch 'feature/new-feature'.
+🔄 Rebasing 'feature/new-feature' onto 'main'...
+✅ Successfully rebased onto 'main'. Branch is now up-to-date!
 ```
 
 When no PR is found:
@@ -140,6 +145,15 @@ PR Info:
 - Make sure you've reloaded your shell: `source ~/.zshrc` or `source ~/.bashrc`
 - Verify the function is loaded: `type gpr`
 - Check if the script path is correct in your configuration file
+
+### Rebase conflicts during PR checkout
+- If the PR branch has conflicts with the base branch, the rebase will pause
+- You'll see a message: "⚠️ Rebase encountered conflicts. Please resolve them manually."
+- To resolve:
+  1. Fix the conflicts in the affected files
+  2. Stage the resolved files: `git add <file>`
+  3. Continue the rebase: `git rebase --continue`
+- To abort the rebase and return to the pre-rebase state: `git rebase --abort`
 
 ## Customization
 

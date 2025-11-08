@@ -30,6 +30,33 @@ function gpr() {
       echo "⚠️ An error occurred while checking out PR #$PR_NUMBER."
     else
       echo "✅ PR #$PR_NUMBER successfully checked out. You are currently on branch '$PR_BRANCH_NAME'."
+
+      # Get the base branch of the PR
+      BASE_BRANCH=$(gh pr view "$PR_NUMBER" --json baseRefName --template '{{.baseRefName}}' 2>/dev/null)
+
+      if [ -n "$BASE_BRANCH" ]; then
+        echo "🔄 Rebasing '$PR_BRANCH_NAME' onto '$BASE_BRANCH'..."
+
+        # Fetch the latest changes from the base branch
+        git fetch origin "$BASE_BRANCH"
+
+        if [ $? -ne 0 ]; then
+          echo "⚠️ Failed to fetch updates from '$BASE_BRANCH'."
+        else
+          # Rebase the PR branch onto the base branch
+          git rebase "origin/$BASE_BRANCH"
+
+          if [ $? -ne 0 ]; then
+            echo "⚠️ Rebase encountered conflicts. Please resolve them manually."
+            echo "💡 After resolving conflicts, run: git rebase --continue"
+            echo "💡 To abort the rebase, run: git rebase --abort"
+          else
+            echo "✅ Successfully rebased onto '$BASE_BRANCH'. Branch is now up-to-date!"
+          fi
+        fi
+      else
+        echo "⚠️ Could not determine base branch for PR #$PR_NUMBER."
+      fi
     fi
   fi
 }
