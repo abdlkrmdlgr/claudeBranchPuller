@@ -30,7 +30,41 @@ Before using this script, ensure you have:
 
 ## Installation
 
-### Method 1: Direct Installation (Recommended)
+### Method 1: Automatic Installation (Recommended) 🚀
+
+1. Clone this repository:
+   ```bash
+   git clone https://github.com/abdlkrmdlgr/claudeBranchPuller.git
+   cd claudeBranchPuller
+   ```
+
+2. Run the installer:
+   ```bash
+   ./install.sh
+   ```
+
+   The installer will:
+   - ✅ Auto-detect your shell (bash/zsh)
+   - ✅ Add `gpr` to your shell configuration
+   - ✅ Create a backup of your config file
+   - ✅ Prompt you to reload your shell
+
+3. **Important:** If your default branch is not `main` (e.g., `master`, `develop`, etc.), you'll need to modify `gpr.sh` before running the installer. See the [Customization](#customization) section below.
+
+4. Reload your shell or restart your terminal:
+   ```bash
+   # For Zsh
+   source ~/.zshrc
+
+   # For Bash
+   source ~/.bashrc
+   ```
+
+That's it! The `gpr` command is now available.
+
+### Method 2: Manual Installation
+
+If you prefer manual installation or the automatic installer doesn't work for your setup:
 
 1. Clone or download this repository:
    ```bash
@@ -59,7 +93,7 @@ Before using this script, ensure you have:
    source ~/.bashrc
    ```
 
-### Method 2: Manual Installation
+### Method 3: Copy Function Directly
 
 1. Open your shell configuration file:
    - **Zsh:** `~/.zshrc`
