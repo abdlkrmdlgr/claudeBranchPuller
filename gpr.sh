@@ -52,6 +52,17 @@ function gpr() {
             echo "💡 To abort the rebase, run: git rebase --abort"
           else
             echo "✅ Successfully rebased onto '$BASE_BRANCH'. Branch is now up-to-date!"
+
+            # Push the rebased branch to GitHub
+            echo "📤 Pushing rebased branch to GitHub..."
+            git push --force-with-lease origin "$PR_BRANCH_NAME"
+
+            if [ $? -ne 0 ]; then
+              echo "⚠️ Failed to push to GitHub. You may need to push manually with:"
+              echo "   git push --force-with-lease origin $PR_BRANCH_NAME"
+            else
+              echo "✅ Successfully pushed rebased branch to GitHub!"
+            fi
           fi
         fi
       else
